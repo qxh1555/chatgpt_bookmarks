@@ -69,7 +69,7 @@
       <header><div><h2>对话书签</h2><p class="subtitle">给阅读留一个落点</p></div><button class="icon close" aria-label="关闭书签">×</button></header>
       <button class="add">＋ 标记当前阅读位置</button>
       <div class="list"></div>
-      <footer>仅保存在本机 · Alt + Shift + B 添加书签</footer>
+      <footer>仅保存在本机 · Alt + Shift + B 添加书签<br><a class="privacy-link" target="_blank" rel="noopener noreferrer" style="color:inherit;text-underline-offset:3px">隐私政策</a></footer>
     </section>
     <button class="ui selection" hidden>＋ 添加书签</button>
     <div class="ui toast" role="status" aria-live="polite" hidden></div>
@@ -80,6 +80,11 @@
   const launcher = $(".launcher");
   const panel = $(".panel");
   const selectionButton = $(".selection");
+  $(".privacy-link").href = chrome.runtime.getURL("privacy.html");
+  $(".privacy-link").addEventListener("click", (event) => {
+    event.preventDefault();
+    chrome.runtime.sendMessage({ type: "conversation-bookmarks:privacy" }).catch(error);
+  });
 
   function notify(message) {
     const toast = $(".toast");

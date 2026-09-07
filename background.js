@@ -12,3 +12,9 @@ chrome.action.onClicked.addListener(async (tab) => {
     });
   }
 });
+
+chrome.runtime.onMessage.addListener((message, sender) => {
+  if (sender.id === chrome.runtime.id && message.type === "conversation-bookmarks:privacy") {
+    chrome.tabs.create({ url: chrome.runtime.getURL("privacy.html") });
+  }
+});

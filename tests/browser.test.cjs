@@ -16,7 +16,7 @@ const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'cgb-test-'));
     executablePath: process.env.BROWSER_EXECUTABLE || undefined,
     channel: 'chromium', headless: true,
     ignoreDefaultArgs: ['--disable-extensions'],
-    viewport: { width:1280, height:900 },
+    viewport: { width:1280, height:800 },
     args: process.env.EXTENSION_CDP === '1'
       ? ['--enable-unsafe-extension-debugging']
       : [`--disable-extensions-except=${root}`, `--load-extension=${root}`]
@@ -36,6 +36,8 @@ const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'cgb-test-'));
     await ui.waitFor({state:'attached', timeout:15000});
     const worker = context.serviceWorkers()[0] || await context.waitForEvent('serviceworker', {timeout:10000});
     console.log('PASS: real unpacked extension loaded:', worker.url());
+    let capturedSelection = false;
+    if (process.env.CAPTURE_STORE === '1') fs.mkdirSync(path.join(root,'store','screenshots'),{recursive:true});
 
     async function selectTarget(target = '#target') {
       await page.locator(target).evaluate((element) => {
@@ -47,6 +49,10 @@ const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'cgb-test-'));
         selection.addRange(range);
       });
       await ui.locator('.selection').waitFor({state:'visible'});
+      if (process.env.CAPTURE_STORE === '1' && !capturedSelection) {
+        await page.screenshot({path:path.join(root,'store','screenshots','01-add-bookmark.png')});
+        capturedSelection = true;
+      }
       await ui.locator('.selection').click();
     }
     await selectTarget();
@@ -82,6 +88,15 @@ const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'cgb-test-'));
 
     await ui.locator('.launcher').click();
     await page.screenshot({path:path.join(root,'tests','preview.png')});
+    if (process.env.CAPTURE_STORE === '1') await page.screenshot({path:path.join(root,'store','screenshots','02-return-to-passage.png')});
+    const privacyOpened = context.waitForEvent('page');
+    await ui.locator('.privacy-link').click();
+    const privacy = await privacyOpened;
+    await privacy.waitForLoadState();
+    assert.match(privacy.url(), /chrome-extension:\/\/[^/]+\/privacy\.html$/);
+    assert.equal(await privacy.getByRole('heading', {name:'隐私政策',exact:true}).count(), 1);
+    await privacy.close();
+    console.log('PASS: packaged privacy policy opens from the extension');
     await page.emulateMedia({colorScheme:'dark'});
     await page.screenshot({path:path.join(root,'tests','preview-dark.png')});
     await page.emulateMedia({colorScheme:'light'});

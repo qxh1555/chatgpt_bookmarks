@@ -4,6 +4,10 @@
 
 [GitHub 仓库](https://github.com/qxh1555/chatgpt_bookmarks) · 展示页源码位于 `docs/`。
 
+[展示页与下载](https://qxh1555.github.io/chatgpt_bookmarks/) · [隐私政策](https://qxh1555.github.io/chatgpt_bookmarks/privacy.html)
+
+1.0.1 已补充扩展图标、本地隐私政策入口和商店素材。上架文案、隐私填报依据、审核说明和截图位于 `store/`；详见 [提交说明](store/SUBMISSION.md)。这不代表已通过 Chrome 应用商店审核。
+
 ## 安装（无需编译）
 
 1. 在 Chrome 地址栏输入 `chrome://extensions`。

@@ -1,4 +1,4 @@
-// Dependency-free ZIP writer (stored entries) for the four extension runtime files.
+// Dependency-free ZIP writer (stored entries) for extension runtime files.
 const fs = require('node:fs');
 const path = require('node:path');
 function crc32(data) {

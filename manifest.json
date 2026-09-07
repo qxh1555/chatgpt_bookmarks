@@ -1,11 +1,13 @@
 {
   "manifest_version": 3,
   "name": "对话书签 · ChatGPT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "在 ChatGPT 长回答中标记阅读位置，随时一键返回。书签仅保存在本机。",
   "permissions": ["storage"],
+  "homepage_url": "https://qxh1555.github.io/chatgpt_bookmarks/",
+  "icons": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
   "background": { "service_worker": "background.js" },
-  "action": { "default_title": "打开对话书签" },
+  "action": { "default_title": "打开对话书签", "default_icon": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png" } },
   "content_scripts": [{
     "matches": ["https://chatgpt.com/*", "https://chat.openai.com/*"],
     "js": ["anchors.js", "content.js"],
