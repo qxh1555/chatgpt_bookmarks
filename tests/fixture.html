@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<title>对话书签 · 本地验证</title>
+<style>
+  * { box-sizing:border-box } body { margin:0; background:#fff; color:#252925; font:16px/1.9 system-ui,"Microsoft YaHei",sans-serif }
+  header { position:fixed; top:0; left:0; right:0; height:64px; padding:12px 30px; background:#fffffff0; border-bottom:1px solid #eee; z-index:10 }
+  header span { float:right; font-size:12px; color:#8c938d }
+  main { height:100vh; overflow-y:auto; padding:90px max(30px,calc((100vw - 730px)/2)) 180px }
+  article { margin-bottom:36px } h1 { font-size:26px } h2 { font-size:21px; margin-top:34px } p { margin:20px 0 }
+  [data-message-author-role=user] { background:#f3f4f3; border-radius:18px; padding:16px 20px; margin-left:100px }
+  footer { position:fixed; bottom:0; height:90px; left:calc(50% - 365px); width:730px; background:#fff; padding:10px }
+  textarea { width:100%; padding:16px; border:1px solid #ddd; border-radius:20px; resize:none; font:inherit }
+</style>
+<header>ChatGPT <span>本地模拟对话 · 用于验证插件</span></header>
+<main>
+  <article data-testid="conversation-turn-0" id="turn-question"><div data-message-author-role="user" data-message-id="question-1">请解释如何更好地阅读一段很长的回答。</div></article>
+  <article data-testid="conversation-turn-1" id="turn-answer"><div data-message-author-role="assistant" data-message-id="answer-1">
+    <h1>让长对话里的阅读，有迹可循</h1>
+    <p>长回答可以容纳丰富的信息，却也容易让阅读位置被新的消息淹没。问题不是内容太多，而是我们需要一个轻巧的方式，记住上次停留的地方。</p>
+    <h2>01 · 先建立阅读的线索</h2>
+    <p>你不必一次读完整段回答。先浏览标题，找到和当前问题有关的部分，再逐步阅读细节。把注意力留给眼前的一小段内容，通常比反复从头开始更有效。</p>
+    <p>阅读的节奏可以由你决定。理解一个观点之后，停下来思考它如何与自己的经验关联。提出追问之前，留下一枚书签，之后就能轻松回来。</p>
+    <h2>02 · 在具体的位置留下书签</h2>
+    <p id="target">书签应该指向<strong>你真正读到的那句话</strong>，而不是整条回答的开头。即使后面又生成了很多新内容，也应该能够准确返回。</p>
+    <p>选中这段文字，添加书签，然后继续向下阅读。书签列表会保留原文片段，你也可以为它起一个更容易辨认的名字。</p>
+    <h2>03 · 让工具保持简单</h2>
+    <p>一个阅读辅助工具只需要做好少数几件事：记住位置、找到位置，并且尽量不打扰阅读。无需建立复杂的目录，也无需给每段文字分类。</p>
+    <div id="long-content"></div>
+    <p id="ending">这是回答的末尾。现在可以点击书签，回到之前标记的段落。</p>
+  </div></article>
+  <article data-testid="conversation-turn-2" id="turn-follow-up"><div data-message-author-role="user" data-message-id="question-2">继续解释下一部分。</div></article>
+</main>
+<footer><textarea aria-label="发送消息" placeholder="发送消息"></textarea></footer>
+<script>
+  document.getElementById('long-content').innerHTML = Array.from({length:24}, (_,i) => `<p>补充说明 ${i+1}：阅读不仅是接收信息，也是不断建立联系的过程。为重要的句子留下一个可以返回的位置，能够减少寻找上下文的时间，让思考自然地继续。</p>`).join('');
+</script>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "chatgpt-conversation-bookmarks",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A small, dependency-free Chrome extension for bookmarking ChatGPT passages.",
+  "scripts": {
+    "build": "node scripts/build-site.cjs",
+    "dev": "node scripts/preview-site.cjs",
+    "test": "node --test tests/anchors.test.cjs",
+    "check": "node --check anchors.js && node --check content.js && node --check background.js"
+  }
+}
